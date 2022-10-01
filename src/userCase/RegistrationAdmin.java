@@ -10,7 +10,7 @@ import crime.information.CrimeInterfaceImpl;
 
 public class RegistrationAdmin {
 
-	public static void main(String[] args) {
+	public  void registerAdmin() {
 		
 		Scanner sc = new Scanner(System.in);
 		
