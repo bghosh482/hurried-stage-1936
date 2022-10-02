@@ -21,16 +21,18 @@ public class Home {
 		System.out.println("3.Registered as admin");
 		System.out.println("4.Get all cases..");
 		System.out.println("5.solve and unsolved cases number");
+		System.out.println("6.Search case by address");
+
 		int choice = sc.nextInt();
 		try {
 			switch (choice) {
 			case 1: {
 				LoginAsAdmin loginAsAdmin = new LoginAsAdmin();
-				boolean status =  loginAsAdmin.login();
-				if(status) {
+				boolean status = loginAsAdmin.login();
+				if (status) {
 					loginAsAdmin.loginOption();
 				}
-				
+
 				break;
 
 			}
@@ -41,19 +43,29 @@ public class Home {
 			}
 			case 3: {
 				RegistrationAdmin registrationAdmin = new RegistrationAdmin();
-				registrationAdmin.registerAdmin();
+				String m = registrationAdmin.registerAdmin();
+				System.out.println(m);
 				break;
 			}
 			case 4: {
 				CrimeInterface crimeInterface = new CrimeInterfaceImpl();
-				List<Case> cases = crimeInterface.getAllTheCases();
-				cases.forEach(c -> System.out.println(c));                                                                                                                                                                                                     
+				List<Case> cases = crimeInterface.GetAlldetailsOfVictim();
+				cases.forEach(c -> System.out.println("case Id: " + c.getId() + " Name of victim:  " + c.getName()
+						+ "case status : " + c.getStatus()));
 				break;
 			}
 			case 5:
 				CrimeInterface ci = new CrimeInterfaceImpl();
-				String m =  ci.NumberOfsolvedAndUnsolvedCase();
+				String m = ci.NumberOfsolvedAndUnsolvedCase();
 				System.out.println(m);
+				break;
+			case 6:
+				System.out.println("Enter Area : ");
+				String area = sc.next();
+				CrimeInterface ci2 = new CrimeInterfaceImpl();
+				List<Case> cases = ci2.searchCasesAreaWise(area);
+				cases.forEach(c -> System.out.println(c));
+
 				break;
 			default:
 				System.out.println("enter wrong input");

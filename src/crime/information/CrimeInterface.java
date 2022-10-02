@@ -15,10 +15,12 @@ public interface CrimeInterface {
 	public String registerCase(Case c) throws CaseException;
 	public List<Case> getAllTheCases() throws CaseException;
 	public Case GetCaseById(int id) throws CaseException;
-	
+	public List<Case> GetAlldetailsOfVictim() throws CaseException;
 	public boolean changeStatusOfCase(int id, String status) throws CaseException;
 	
 	public String NumberOfsolvedAndUnsolvedCase() throws CaseException;
+	
+	public List<Case> searchCasesAreaWise(String area) throws CaseException;
 	
 	
 }
