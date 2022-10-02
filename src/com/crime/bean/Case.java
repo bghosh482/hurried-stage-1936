@@ -6,14 +6,16 @@ import java.time.LocalDate;
 
 public class Case {
 	
+	
 	@Override
 	public String toString() {
-		return "Case [name=" + name + ", address=" + address + ", date=" + date + ", crime=" + crime + ", desc=" + desc
-				+ ", mainSuspect=" + mainSuspect + ", criminalname=" + criminalname + ", criminalage=" + criminalage
-				+ ", criminalgender=" + criminalgender + ", criminaladdress=" + criminaladdress + ", arrestedArea="
-				+ arrestedArea + "]";
+		return "Case [id=" + id + ", name=" + name + ", address=" + address + ", date=" + date + ", crime=" + crime
+				+ ", desc=" + desc + ", mainSuspect=" + mainSuspect + ", criminalname=" + criminalname
+				+ ", criminalage=" + criminalage + ", criminalgender=" + criminalgender + ", criminaladdress="
+				+ criminaladdress + ", arrestedArea=" + arrestedArea + ", status=" + status + "]";
 	}
 
+	private int id;
 	private String name;
 	private String address;
 	private LocalDate date;
@@ -27,6 +29,7 @@ public class Case {
 	private String criminalgender;
 	private String criminaladdress;
 	private String arrestedArea;
+	private String status;
 	
 	public Case() {
 		// TODO Auto-generated constructor stub
@@ -118,6 +121,22 @@ public class Case {
 
 	public void setArrestedArea(String arrestedArea) {
 		this.arrestedArea = arrestedArea;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

@@ -10,7 +10,7 @@ import crime.information.CrimeInterfaceImpl;
 
 public class RegistrationAdmin {
 
-	public  void registerAdmin() {
+	public  String registerAdmin() throws PersonException {
 		
 		Scanner sc = new Scanner(System.in);
 		
@@ -35,14 +35,14 @@ public class RegistrationAdmin {
 		
 		
 		CrimeInterface ci = new CrimeInterfaceImpl();
-		String m;
+		String m=null;
 		try {
 			m = ci.registrationAdmin(p);
 		} catch (PersonException e) {
-			System.out.println(e.getMessage());
+			throw new PersonException(e.getMessage());
 		}
 	
-		
+		return m;
 
 	}
 

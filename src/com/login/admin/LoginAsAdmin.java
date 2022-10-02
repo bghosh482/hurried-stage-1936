@@ -1,5 +1,6 @@
 package com.login.admin;
 
+import java.util.List;
 import java.util.Scanner;
 
 import com.crime.bean.Case;
@@ -42,7 +43,14 @@ public class LoginAsAdmin {
 		int choice = sc.nextInt();
 		try {
 			switch (choice) {
-			
+			case 1:
+				CrimeInterface crimeInterface = new CrimeInterfaceImpl();
+				List<Case> cases = crimeInterface.getAllTheCases();
+				cases.forEach(c -> System.out.println(c));
+				break;
+			case 2:
+				
+				break;
 			case 3:
 				System.out.println("enter case id : ");
 				int cid = sc.nextInt();

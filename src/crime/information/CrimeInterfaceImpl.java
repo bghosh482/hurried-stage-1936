@@ -135,8 +135,9 @@ public class CrimeInterfaceImpl implements CrimeInterface {
 				String cgender = rs.getString("cgender");
 				String caddress = rs.getString("caddress");
 				String carrestedArea = rs.getString("carrestedArea");
-
+				String status = rs.getString("status");
 				Case c = new Case();
+				c.setId(cid);
 				c.setName(n);
 				c.setAddress(ad);
 				c.setDate(ld);
@@ -148,13 +149,12 @@ public class CrimeInterfaceImpl implements CrimeInterface {
 				c.setCriminalgender(cgender);
 				c.setCriminaladdress(caddress);
 				c.setArrestedArea(carrestedArea);
+				c.setStatus(status);
 				cases.add(c);
 
-				if (cases.size() == 0)
-					throw new CaseException("No record found..");
-
 			}
-
+			if (cases.size() == 0)
+				throw new CaseException("No record found..");
 		} catch (SQLException e) {
 			throw new CaseException(e.getMessage());
 		}
@@ -189,7 +189,8 @@ public class CrimeInterfaceImpl implements CrimeInterface {
 				String cgender = rs.getString("cgender");
 				String caddress = rs.getString("caddress");
 				String carrestedArea = rs.getString("carrestedArea");
-
+				String status = rs.getString("status");
+				c.setId(cid);
 				c.setName(n);
 				c.setAddress(ad);
 				c.setDate(ld);
@@ -201,7 +202,7 @@ public class CrimeInterfaceImpl implements CrimeInterface {
 				c.setCriminalgender(cgender);
 				c.setCriminaladdress(caddress);
 				c.setArrestedArea(carrestedArea);
-
+				c.setStatus(status);
 			}
 
 		} catch (Exception e) {
@@ -245,7 +246,7 @@ public class CrimeInterfaceImpl implements CrimeInterface {
 			int solved = 0;
 			int unsolved = 0;
 			while (rs.next()) {
-				boolean x =  rs.getString("status").equals("solved");
+				boolean x = rs.getString("status").equals("solved");
 				if (x) {
 					solved++;
 				} else {
@@ -258,5 +259,97 @@ public class CrimeInterfaceImpl implements CrimeInterface {
 		}
 
 		return m;
+	}
+
+	@Override
+	public List<Case> searchCasesAreaWise(String area) throws CaseException {
+		List<Case> cases = new ArrayList<>();
+
+		try (Connection conn = DBUtil.proviedConnection()) {
+
+			PreparedStatement ps = conn.prepareStatement("select * from crime_case where carrestedArea = ?");
+			ps.setString(1, area);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				int cid = rs.getInt("id");
+				String n = rs.getString("name");
+				String ad = rs.getString("address");
+				Date d = rs.getDate("crimedate");
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+				String strdate = dateFormat.format(d);
+
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+				LocalDate ld = LocalDate.parse(strdate, dtf);
+
+				String crime = rs.getString("crime");
+				String crimedesc = rs.getString("crimedesc");
+				String mainsuspect = rs.getString("mainsuspect");
+				String cname = rs.getString("cname");
+				int age = rs.getInt("cage");
+				String cgender = rs.getString("cgender");
+				String caddress = rs.getString("caddress");
+				String carrestedArea = rs.getString("carrestedArea");
+				String status = rs.getString("status");
+				Case c = new Case();
+				c.setId(cid);
+				c.setName(n);
+				c.setAddress(ad);
+				c.setDate(ld);
+				c.setCrime(crime);
+				c.setDesc(crimedesc);
+				c.setMainSuspect(mainsuspect);
+				c.setCriminalname(cname);
+				c.setCriminalage(age);
+				c.setCriminalgender(cgender);
+				c.setCriminaladdress(caddress);
+				c.setArrestedArea(carrestedArea);
+				c.setStatus(status);
+				cases.add(c);
+
+			}
+			if (cases.size() == 0)
+				throw new CaseException("No record found..");
+
+		} catch (SQLException e) {
+			throw new CaseException(e.getMessage());
+		}
+
+		return cases;
+	}
+
+	@Override
+	public List<Case> GetAlldetailsOfVictim() throws CaseException {
+
+		List<Case> cases = new ArrayList<>();
+
+		try (Connection conn = DBUtil.proviedConnection()) {
+
+			PreparedStatement ps = conn.prepareStatement("select name,address,status from crime_case");
+
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				int cid = rs.getInt("id");
+				String n = rs.getString("name");
+				String ad = rs.getString("address");
+
+				String status = rs.getString("status");
+				Case c = new Case();
+				c.setId(cid);
+				c.setName(n);
+				c.setAddress(ad);
+
+				c.setStatus(status);
+				cases.add(c);
+
+			}
+			if (cases.size() == 0)
+				throw new CaseException("No record found..");
+
+		} catch (SQLException e) {
+			throw new CaseException(e.getMessage());
+		}
+
+		return cases;
+
 	}
 }
